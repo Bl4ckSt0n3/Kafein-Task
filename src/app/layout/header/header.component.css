@@ -1,0 +1,13 @@
+h1 {
+    text-shadow: 2px 2px 2.2px rgb(159, 159, 159);
+    color: cadetblue; 
+    font-weight: bold; 
+    font-style: oblique;
+    font-size: 35px;
+}
+
+.navbar {
+    background: linear-gradient(#9a9a9a 0,#b2b2b2 100%);
+    /*background: linear-gradient(to right,#af2024 0,#7a0e10 100%)*/
+    border-bottom: 1px solid #c6c6c6;
+}
