@@ -10,6 +10,8 @@ import { LoginComponent } from './core/login/login.component';
 import { LoginFormComponent } from './core/login/login-form/login-form.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { NotePagesModule } from './modules/note-pages/note-pages.module';
+import { NotePagesRoutingModule } from './modules/note-pages/note-pages-routing.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { FooterComponent } from './layout/footer/footer.component';
     FormsModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    NotePagesModule,
+    NotePagesRoutingModule,
     NgbModule
   ],
   providers: [],

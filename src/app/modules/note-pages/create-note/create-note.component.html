@@ -1,0 +1,20 @@
+<div class="container d-flex align-items-center">
+    <div class="col-md-12" style="margin-top: 60px;">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10">
+                <div class="not-area">
+                    <div class="form-group mt-3">
+                        <div class="title">
+                            <label for="noteTextarea" class="h3">Create Note</label>
+                        </div>
+                        <textarea [(ngModel)]="noteText" placeholder="type here..." class="form-control" id="noteTextarea" rows="15"></textarea>
+                    </div>
+                    <div class="float-end mt-3">
+                        <button type="button" (click)="onSubmit()" class="btn btn-success me-2">Add</button>
+                        <button type="button" class="btn btn-warning">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

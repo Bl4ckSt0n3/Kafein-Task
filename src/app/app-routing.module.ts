@@ -4,11 +4,15 @@ import { LoginComponent } from './core/login/login.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'auth', pathMatch: 'full' },
-  { 
-    path: '**', 
-    component: LoginComponent 
-  },
+  // { 
+  //   path: '**', 
+  //   component: LoginComponent 
+  // },
   { path: "auth", component: LoginComponent },
+  {
+    path: 'notes',
+    loadChildren: () => import('./modules/note-pages/note-pages.module').then(module => module.NotePagesModule)
+  },
 
 ];
 

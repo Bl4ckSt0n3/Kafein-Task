@@ -1,0 +1,10 @@
+.h3 {
+    text-shadow: 2px 2px 2.2px rgb(159, 159, 159);
+    color: cadetblue; 
+    font-weight: bold; 
+    font-style: oblique;
+    font-size: 35px;
+}
+.btn {
+    box-shadow: 2px 2px 2.2px rgb(159, 159, 159);
+}

@@ -1,9 +1,9 @@
-h1 {
-    text-shadow: 2px 2px 2.2px rgb(159, 159, 159);
-    color: cadetblue; 
+ .nav-link{
+    text-shadow: 0.6px 0.6px 1.2px rgb(83, 83, 83);
+    /* color: cadetblue; 
     font-weight: bold; 
     font-style: oblique;
-    font-size: 35px;
+    font-size: 35px; */
 }
 
 .navbar {
