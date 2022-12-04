@@ -5,7 +5,8 @@ import { NotePagesRoutingModule } from './note-pages-routing.module';
 import { NotesComponent } from './notes/notes.component';
 import { CreateNoteComponent } from './create-note/create-note.component';
 import { UpdateNoteComponent } from './update-note/update-note.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -17,6 +18,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NotePagesRoutingModule
   ]
 })

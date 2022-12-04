@@ -20,7 +20,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
         </div>
         <div class="mt-3">
             <label class="h5" for="Id" style="color: #fff;">Password: </label>
-            <input type="password" class="form-control" id="Id" placeholder="password" formControlName="password">
+            <input type="password" class="form-control" id="Id" placeholder="password" formControlName="password" required>
             <div *ngIf="fControls['password'].invalid && (fControls['password'].dirty || fControls['password'].touched)" class="alert alert-danger">
               <div *ngIf="fControls['password'].errors?.['required']">
                 Password is required.

@@ -1,13 +1,21 @@
 <div class="container d-flex align-items-center">
-    <div class="col-md-12" style="margin-top: 60px;">
+    <div class="col-md-12" style="margin-top: 5px;">
         <div class="row d-flex justify-content-center">
             <div class="col-md-10">
                 <div class="not-area">
-                    <div class="form-group mt-3">
+                    <div class="form-group mt-2">
                         <div class="title">
                             <label for="noteTextarea" class="h3">Create Note</label>
                         </div>
-                        <textarea [(ngModel)]="noteText" placeholder="type here..." class="form-control" id="noteTextarea" rows="15"></textarea>
+                        <!--[(ngModel)]="noteText"-->
+                        <form [formGroup]="textForm">
+                            <textarea  placeholder="type here..." class="form-control" id="noteTextarea" rows="15" formControlName="noteText" required></textarea>
+                            <div *ngIf="formControls['noteText'].errors?.['required']" class="alert alert-danger">
+                                This field is required!
+                            </div>
+                            <label class="priority">Priority: </label>
+                            <input type="number" class="form-control" formControlName="priority">
+                        </form>
                     </div>
                     <div class="float-end mt-3">
                         <button type="button" (click)="onSubmit()" class="btn btn-success me-2">Add</button>

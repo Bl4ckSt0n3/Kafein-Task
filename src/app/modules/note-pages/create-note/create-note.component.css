@@ -5,6 +5,12 @@
     font-style: oblique;
     font-size: 35px;
 }
+.priority {
+    color: rgb(101, 101, 101); 
+    font-weight: bold; 
+    /*font-style: oblique;*/
+    font-size: 15px;
+}
 .btn {
     box-shadow: 2px 2px 2.2px rgb(159, 159, 159);
 }
