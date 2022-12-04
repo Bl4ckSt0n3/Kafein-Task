@@ -1,0 +1,20 @@
+.hidden-buttons {
+    display: none;
+}
+
+.card-body:hover .hidden-buttons {
+    display: block;
+}
+.list-items {
+    max-height: 70vh;
+    overflow-y: scroll;
+    overflow: auto;
+}
+
+.h3 {
+    text-shadow: 2px 2px 2.2px rgb(159, 159, 159);
+    color: cadetblue; 
+    font-weight: bold; 
+    font-style: oblique;
+    font-size: 35px;
+}

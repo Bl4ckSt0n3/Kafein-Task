@@ -7,9 +7,9 @@
          [class.collapse]="navbarCollapsed" 
          [ngClass]="{'bg-red':!navbarCollapsed}"
          id="navbarCollapse">
-      <ul class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto" *ngIf="isUser()==true">
         <li class="nav-item active">
-          <a class="nav-link" (click)="logout()">Logout<span ></span></a>
+          <button class="nav-link btn" (click)="logout()">Logout<span ></span></button>
         </li>
         <li class="nav-item active">
           <a class="nav-link" [routerLink]="['/notes/create']">Add Note</a>

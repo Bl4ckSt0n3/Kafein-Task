@@ -13,6 +13,8 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { NotePagesModule } from './modules/note-pages/note-pages.module';
 import { NotePagesRoutingModule } from './modules/note-pages/note-pages-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -23,17 +25,28 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
     FooterComponent,
   ],
   imports: [
-    // AuthComponent,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserTransferStateModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
     BrowserAnimationsModule,
+    // BrowserModule,
+    CommonModule,
     AppRoutingModule,
     NotePagesModule,
     NotePagesRoutingModule,
-    NgbModule
+    NgbModule,
+    ToastrModule.forRoot({
+      tapToDismiss : true,
+      timeOut: 5000,
+      progressBar : true,
+      progressAnimation : 'decreasing',
+      autoDismiss: true,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      closeButton: true
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent]

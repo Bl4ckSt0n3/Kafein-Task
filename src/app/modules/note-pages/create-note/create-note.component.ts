@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { NoteAppService } from '../../SharedServices/note-app.service';
 import { CreateNoteModel } from './create-note-model.model';
 
@@ -9,13 +11,15 @@ import { CreateNoteModel } from './create-note-model.model';
   templateUrl: './create-note.component.html',
   styleUrls: ['./create-note.component.css']
 })
-export class CreateNoteComponent implements OnInit {
+export class CreateNoteComponent {
 
-  constructor(private noteService: NoteAppService) { }
+  constructor(
+    private noteService: NoteAppService,
+    private router: Router,
+    private toastr: ToastrService,
+    ) { }
 
   // noteText!: string;
-
-  
   textForm = new FormGroup({
     noteText: new FormControl('', [Validators.required]),
     priority: new FormControl('')
@@ -33,9 +37,17 @@ export class CreateNoteComponent implements OnInit {
 
     // send this data to mock api service
     this.noteService.create(textData).subscribe((e: any) => e);
-    // console.log(textData);
+    this.toastr.success("Created!", "Success", {
+      tapToDismiss: true,
+      timeOut: 5000,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      positionClass: 'toast-top-right',
+      closeButton: true
+    });
   }
-  ngOnInit(): void {
+  public cancel(): void {
+    this.router.navigate(['/notes/getall']);
   }
 
 }

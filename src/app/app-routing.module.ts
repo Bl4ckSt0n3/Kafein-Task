@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/Guard/auth.guard';
 import { LoginComponent } from './core/login/login.component';
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
   { path: "auth", component: LoginComponent },
   {
     path: 'notes',
-    loadChildren: () => import('./modules/note-pages/note-pages.module').then(module => module.NotePagesModule)
+    loadChildren: () => import('./modules/note-pages/note-pages.module').then(module => module.NotePagesModule),
+    
   },
 
 ];

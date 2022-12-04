@@ -7,6 +7,8 @@ import { CreateNoteComponent } from './create-note/create-note.component';
 import { UpdateNoteComponent } from './update-note/update-note.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserModule } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -19,7 +21,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NotePagesRoutingModule
+    NotePagesRoutingModule,
+    // BrowserAnimationsModule,
+    // BrowserModule,
+    ToastrModule.forRoot({
+      tapToDismiss : true,
+      timeOut: 5000,
+      progressBar : true,
+      progressAnimation : 'decreasing',
+      autoDismiss: true,
+      positionClass: 'toast-top-right',
+      preventDuplicates: true,
+      closeButton: true
+    }),
   ]
 })
 export class NotePagesModule { }

@@ -14,12 +14,12 @@
                                 This field is required!
                             </div>
                             <label class="priority">Priority: </label>
-                            <input type="number" class="form-control" formControlName="priority">
+                            <input type="number" class="form-control" formControlName="priority" min="1" max="5">
                         </form>
                     </div>
                     <div class="float-end mt-3">
                         <button type="button" (click)="onSubmit()" class="btn btn-success me-2">Add</button>
-                        <button type="button" class="btn btn-warning">Cancel</button>
+                        <button type="button" (click)="cancel()" class="btn btn-warning">Cancel</button>
                     </div>
                 </div>
             </div>
