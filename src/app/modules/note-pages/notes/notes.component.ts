@@ -1,10 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { map } from 'rxjs';
 import { NoteAppService } from '../../SharedServices/note-app.service';
 import { UpdateNoteComponent } from '../update-note/update-note.component';
 
+@Component({
+  selector: 'app-notes',
+  template: `
+    <div class="modal-header">
+        <h4 class="modal-title">Delete Note</h4>
+        <button type="button" class="close btn" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <h5>
+          Your are about to delete this note.
+          Are you sure ?
+        </h5>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success" (click)="confirm()">Delete</button>
+        <button class="btn btn-danger ms-3" (click)="activeModal.dismiss('Cross click')">Cancel</button>
+    </div>
+  `,
+})
+
+export class DeleteNoteModal {
+  @Output() passEntry: EventEmitter<boolean> = new EventEmitter(); 
+  constructor(public activeModal: NgbActiveModal) {
+
+  }
+  public confirm(): void {
+    this.passEntry.emit(true);
+    this.activeModal.close('Cross click');
+  }
+}
 
 @Component({
   selector: 'app-notes',
@@ -13,6 +45,8 @@ import { UpdateNoteComponent } from '../update-note/update-note.component';
   providers: [NoteAppService]
 })
 export class NotesComponent {
+
+  
 
   notes: any = [];
   returnMessage: string = "Henüz içerik girilmedi";
@@ -40,20 +74,38 @@ export class NotesComponent {
   }
 
   public remove(id: number) {
-    this.service.remove(id).subscribe((e: any) => {
-      if (e["message"] == "success") {
-        this.getAll();
-        this.toastr.success("Deleted!", "Success", {
-          tapToDismiss: true,
-          timeOut: 5000,
-          progressBar: true,
-          progressAnimation: 'decreasing',
-          positionClass: 'toast-top-right',
-          closeButton: true
-        });
-      }
-    });
-    
+    const modalRef = this.modalService.open(DeleteNoteModal); 
+    if(this.modalService.hasOpenModals()) {
+      modalRef.componentInstance.passEntry.subscribe((e: any) => {
+        if (e == true) {
+          this.service.remove(id).subscribe(
+            (success: any) => {
+              if (success["message"] == "success") {
+                this.getAll();
+                this.toastr.success("Deleted!", "Success", {
+                  tapToDismiss: true,
+                  timeOut: 5000,
+                  progressBar: true,
+                  progressAnimation: 'decreasing',
+                  positionClass: 'toast-top-right',
+                  closeButton: true
+                });
+              }
+            },
+            (error: any) => {
+              this.toastr.error("Error", "error!", {
+                tapToDismiss: true,
+                timeOut: 5000,
+                progressBar: true,
+                progressAnimation: 'decreasing',
+                positionClass: 'toast-top-right',
+                closeButton: true
+              });
+            }
+            );
+        }
+      });
+    }
   }
 
   public update(id: number, noteText: string, priority: string) {
