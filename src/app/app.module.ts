@@ -3,7 +3,7 @@ import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-bro
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from './core/login/login.component';
@@ -15,6 +15,7 @@ import { NotePagesRoutingModule } from './modules/note-pages/note-pages-routing.
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -35,8 +36,10 @@ import { CommonModule } from '@angular/common';
     CommonModule,
     AppRoutingModule,
     NotePagesModule,
+    Ng2SearchPipeModule,
     NotePagesRoutingModule,
     NgbModule,
+    NgbDropdownModule,
     ToastrModule.forRoot({
       tapToDismiss : true,
       timeOut: 5000,

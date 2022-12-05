@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { BrowserModule } from '@angular/platform-browser';
     FormsModule,
     ReactiveFormsModule,
     NotePagesRoutingModule,
+    NgbDropdownModule,
+    Ng2SearchPipeModule,
     // BrowserAnimationsModule,
     // BrowserModule,
     ToastrModule.forRoot({

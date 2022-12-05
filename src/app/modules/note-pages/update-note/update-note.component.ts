@@ -19,17 +19,30 @@ export class UpdateNoteComponent {
   textForm = new FormGroup({
     noteText: new FormControl('', [Validators.required]),
     priority: new FormControl(''),
+    image: new FormControl(''),
     id: new FormControl('')
   });
 
   public get formControls() {
     return this.textForm.controls;
   }
+
+  url: any;
+  onFileSelected(event: any) {
+    console.log(event.target.files[0]);
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event: any) => {
+      this.url = event.target.result;
+      // console.log(this.url);
+    };
+  }
   
   confirm() {
     var out: UpdateNoteModel = new UpdateNoteModel(
       this.textForm.get('noteText')?.value,
       this.textForm.get('priority')?.value,
+      this.url,
       this.textForm.get('id')?.value,
     )
     this.passEntry.emit(out);

@@ -5,24 +5,26 @@ import { map } from 'rxjs';
 import { NoteAppService } from '../../SharedServices/note-app.service';
 import { UpdateNoteComponent } from '../update-note/update-note.component';
 
+
 @Component({
   selector: 'app-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.css'],
   providers: [NoteAppService]
 })
-export class NotesComponent implements OnInit {
+export class NotesComponent {
 
   notes: any = [];
   returnMessage: string = "Henüz içerik girilmedi";
   isEmpty!: boolean;
+  selectedSortOrder: any = "Sort by";  
+  searchText: any;
   constructor(
     private service: NoteAppService, 
     private modalService: NgbModal,
     private toastr: ToastrService,
     ) {
     this.getAll();
-    console.log(this.notes);
   }
 
   public getAll(): void {
@@ -33,6 +35,7 @@ export class NotesComponent implements OnInit {
         elem.forEach((element: any) => {
           this.notes.push(element);
         });
+        this.notes.reverse();
     })
   }
 
@@ -66,30 +69,54 @@ export class NotesComponent implements OnInit {
         var emitted = {
           id: e.id,
           noteText: e.noteText,
-          priority: e.priority
+          priority: e.priority,
+          image: e.image
         }
         // send to server
-        this.service.update(emitted).subscribe((res: any) => res);
-        this.getAll();
-        this.toastr.success("Updated!", "Success", {
-          tapToDismiss: true,
-          timeOut: 5000,
-          progressBar: true,
-          progressAnimation: 'decreasing',
-          positionClass: 'toast-top-right',
-          closeButton: true
-        });
+        this.service.update(emitted).subscribe(
+          (res: any) => {
+            if (res.message == "success") {
+              this.getAll();
+              this.toastr.success("Updated!", "Success", {
+                tapToDismiss: true,
+                timeOut: 5000,
+                progressBar: true,
+                progressAnimation: 'decreasing',
+                positionClass: 'toast-top-right',
+                closeButton: true
+              });
+              
+            }
+          },
+          (error: any) => {
+            this.toastr.error("Error", "Error!", {
+              tapToDismiss: true,
+              timeOut: 5000,
+              progressBar: true,
+              progressAnimation: 'decreasing',
+              positionClass: 'toast-top-right',
+              closeButton: true
+            });
+          });
+        
       })
       
     }
     
   }
 
-  public orderByPriority() {
 
-  }
-
-  ngOnInit(): void {
+  sortOrders: string[] = ["Ascending", "Descending"];
+  templist: any[] = [];
+  onChangeSortOrder(newSortOrder: any) { 
+    // this.selectedSortOrder = newSortOrder;
+    if(newSortOrder == "Ascending") {
+      this.notes.sort((a: any, b: any) => {return parseInt(a.priority) - parseInt(b.priority)});
+    }
+    if(newSortOrder == "Descending") {
+      this.notes.sort((a: any, b: any) => {return parseInt(b.priority) - parseInt(a.priority)});
+    }
+    
   }
 
 }

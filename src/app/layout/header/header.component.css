@@ -1,5 +1,6 @@
  .nav-link{
-    text-shadow: 0.6px 0.6px 1.2px rgb(83, 83, 83);
+    text-shadow: 1px 1px 1.2px rgb(83, 83, 83);
+    color: rgb(55, 55, 55);
     /* color: cadetblue; 
     font-weight: bold; 
     font-style: oblique;

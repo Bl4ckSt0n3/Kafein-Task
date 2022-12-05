@@ -3,11 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs';
 
 const apiUrl = {
-  createNoteUrl: () => "http://localhost:4200/api/create/",
-  getAllNotesUrl: () => "http://localhost:4200/api/",
-  updateNoteUrl: () => "http://localhost:4200/api/update/",
-  deleteNoteUrl: () => "http://localhost:4200/api/delete/",
-  authUrl: () => "http://127.0.0.1:4200/api/auth/"
+  createNoteUrl: () => "http://localhost:4000/api/create/",
+  getAllNotesUrl: () => "http://localhost:4000/api/",
+  updateNoteUrl: () => "http://localhost:4000/api/update/",
+  deleteNoteUrl: () => "http://localhost:4000/api/delete/",
+  authUrl: () => "http://127.0.0.1:4000/api/auth/"
 }
 
 @Injectable({
@@ -22,7 +22,6 @@ export class NoteAppService {
     return this.http.post(apiUrl.createNoteUrl(), data).pipe(map((res: any) => res));
   }
   public read() {
-    // console.log(this.http.get(apiUrl.getAllNotesUrl()));
     return this.http.get(apiUrl.getAllNotesUrl()).pipe(map((res: any) => res));
   }
   public update(data: any) {

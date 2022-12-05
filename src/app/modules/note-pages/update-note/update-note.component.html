@@ -7,12 +7,24 @@
 <div class="modal-body">
     <div class="form-group">
         <form [formGroup]="textForm">
-            <textarea  placeholder="type here..." class="form-control" id="noteTextarea" rows="10" formControlName="noteText" required></textarea>
+            <label class="priority">Note Description: </label>
+            <textarea  placeholder="type here..." class="form-control" id="noteTextarea" rows="14" formControlName="noteText" required></textarea>
             <div *ngIf="formControls['noteText'].errors?.['required']" class="alert alert-danger">
                 This field is required!
             </div>
-            <label class="priority">Priority: </label>
-            <input type="number" class="form-control" formControlName="priority">
+            
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="priority">Priority: </label>
+                        <input type="number" class="form-control" formControlName="priority" min="1" max="5">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="priority">Image: </label>
+                        <input class="form-control" type="file" id="img" name="img" accept="image/*" (change)="onFileSelected($event)" formControlName="image">
+                    </div>
+                </div>
+            </div>
             <div class="mt-3">
                 <button class="btn btn-success" (click)="confirm()">edit item</button>
                 <button class="btn btn-danger ms-3" (click)="activeModal.dismiss('Cross click')">cancel</button>

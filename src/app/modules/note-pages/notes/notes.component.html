@@ -3,26 +3,54 @@
         <div class="row d-flex justify-content-center">
             <div class="col-md-10 mt-3">
                 <div class="row mt-3">
-                    <div class="col-md-10">
+                    <div class="col-md-4">
                         <h3 class="h3">Notes: </h3>
                     </div>
-                    <div class="list-items col-md-10 ">
+                    <div class="col-md-3">
+                        <!-- <input class="input-elevated form-control mt-1" type="text" placeholder="Search"> -->
+                        <div class="search-hero mt-1">
+                            <input class="form-control search-input" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="&#61442; search...">
+                        </div>
+                    </div>
+                    <div class="col-md-3" style="border-bottom: 0.5px, solid, grey;">
+                        <div class="d-flex float-end">
+                            <label class="mt-2 me-2">Sort: </label>
+                            <select class="form-select mt-1 " 
+                                style="border-radius: 5px;" [ngModel]="selectedSortOrder"
+                                (ngModelChange)="onChangeSortOrder($event)"
+                                >
+                                <option *ngFor="let sortOrder of sortOrders" [value]="sortOrder">{{sortOrder}}</option>
+                            </select>
+                        </div>   
+                    </div>
+                    <div class="list-items col-md-11 ">
                         <div *ngIf="isEmpty">
                             <h4 >{{returnMessage}}</h4>
                         </div>
-                        <ul *ngFor="let item of notes; index as i">
-                            <div class="card" style="width: 40rem;">
+                        <ul *ngFor="let item of notes | filter: searchText">
+                            <div class="card" style="width: 45rem;">
                                 <div class="card-body">
-                                    <h5 class="card-subtitle mb-2 text-muted">Priority ~> {{ item.priority }}</h5> 
-                                    <h6 class="card-subtitle mb-2 text-muted">Description</h6>
-                                    <p class="card-text">{{ item.note }}</p>
-                                    <div class="hidden-buttons">
-                                        <button class="btn btn-warning" (click)="update(item.id, item.note, item.priority)"><span><i class="fa fa-pencil" aria-hidden="true"></i></span></button>
-                                        <button class="btn btn-danger ms-2" (click)="remove(item.id)"><span><i class="fa fa-trash-o" aria-hidden="true"></i></span></button>
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <img class="mt-2" *ngIf="item.image" [src]="item.image" alt="image" height="35" width="35">
+                                            <img class="mt-2" *ngIf="!item.image" src="../../../../assets/images/download.png" alt="image" height="35" width="35">
+                                        </div>
+                                        <div class="col-4">
+                                            <h6 class="mb-1 text-muted">Description: </h6>
+                                            <div class="card" style="width: 10rem;">
+                                                <p class="card-text pt-1 pb-1 ps-1 pe-1">"{{ item.note }}"</p>
+                                            </div>
+                                        </div>
+                                        <h6 class="col text-muted">Priority ~> {{ item.priority }}</h6>
+                                        <div class="col-2">
+                                            <div class="hidden-buttons">
+                                                <button class="btn btn-warning" (click)="update(item.id, item.note, item.priority)"><span><i class="fa fa-pencil" aria-hidden="true"></i></span></button>
+                                                <button class="btn btn-danger ms-2" (click)="remove(item.id)"><span><i class="fa fa-trash-o" aria-hidden="true"></i></span></button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        
                         </ul>
                     </div>
                 </div>

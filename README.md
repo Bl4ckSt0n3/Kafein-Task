@@ -1,27 +1,32 @@
-# KafeinTest
+# Project: KafeinTest
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.5.
 
+## Instructions to run the project
+
+In this project mock api was created by author. So that the project should be run side by side.
+
+1 - As the first install all dependencies to use project. To do this open new terminal and run `npm install`.
+2 - Open new terminal and run `ng build:ssr` to build the mock api. 
+3 - After this step run `ng serve:ssr` to serve api.
+4 - Jump on the new terminal and run `ng build` to build angular project.
+5 - After build the project run `ng serve` to serve angular project.
+ 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+## Login 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To login on the login page please use the following:
 
-## Build
+username: admin
+password: 12345
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+

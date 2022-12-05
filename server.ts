@@ -10,6 +10,8 @@ import { existsSync } from 'fs';
 import 'localstorage-polyfill';
 global['localStorage'] = localStorage;
 
+var bodyParser = require('body-parser')
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
@@ -28,10 +30,13 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', distFolder);
-  server.use(express.json());
+  server.use(express.json({limit: "50mb"}));
+  server.use(bodyParser.json({limit: "50mb", extended: true}));
+  server.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+  // server.use(bodyParser({limit: "50mb"}));
 
   // Example Express Rest API endpoints
-  const notes: any = [
+  const notes: any[] = [
     {id: 0, note: "this is test note", priority: 1}, 
     {id: 1, note: "second test note", priority: 1},
     {id: 2, note: "second test note", priority: 1},
@@ -47,23 +52,28 @@ export function app(): express.Express {
     res.send(notes);  
   });
   server.post('/api/create/**', async (req, res) => {
-    const T = {id: notes.length, note: req.body["noteText"], priority: req.body["priority"]};
+    const T = {
+      id: notes.length, 
+      note: req.body["noteText"], 
+      priority: req.body["priority"],
+      image: req.body["image"]
+    };
     notes.push(T);
-    console.log(notes);
-    res.status(200).send(res);
+    console.log("created");
+    res.status(200).send({message: "success"});
   });
   server.post('/api/update/**', async (req, res) => {
-    console.log(req.body);
     notes.forEach((item: any) => {
       if (item.id == req.body["id"]) {
         item.note = req.body["noteText"];
         item.priority = req.body["priority"];
+        item.image = req.body["image"];
       };
     })
+    console.log("updated!")
     res.status(200).send({message: "success"});
   });
   server.post('/api/delete/**', async (req, res) => {
-    console.log(req.body);
     notes.forEach((item: any) => {
       if (item.id == req.body["id"]) {
         notes.splice(notes.indexOf(item), 1);

@@ -31,11 +31,12 @@ import { User } from '../user.model';
             </div>
         </div>
         <div class="mt-3">
-            <button class="btn btn-primary" 
+            <button class="btn btn-secondary" 
                     type="submit"
                     [disabled]="!loginForm.valid"
-            >Login
+            >Login <span><i class="fa fa-sign-in" aria-hidden="true"></i></span>
             </button>
+            
         </div>
     </form>
   </div>`
@@ -63,9 +64,7 @@ export class LoginFormComponent {
     this.sharedService.login(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe(
       (success: any) => {
       if (success.data["message"] == "success") {
-        console.log(success); 
         localStorage.setItem('userdata', success.data["username"]);
-        // console.log(localStorage.getItem('userdata'));
         this.router.navigate(['/notes/getall']);
       }
       

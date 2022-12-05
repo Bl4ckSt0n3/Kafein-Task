@@ -19,32 +19,63 @@ export class CreateNoteComponent {
     private toastr: ToastrService,
     ) { }
 
+  url: any = '';
   // noteText!: string;
   textForm = new FormGroup({
     noteText: new FormControl('', [Validators.required]),
-    priority: new FormControl('')
+    priority: new FormControl(''),
+    image: new FormControl(''),
   });
 
   public get formControls() {
     return this.textForm.controls;
   }
+
+  
+  onFileSelected(event: any) {
+    console.log(event.target.files[0]);
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event: any) => {
+      this.url = event.target.result;
+      // console.log(this.url);
+    };
+  }
   onSubmit() {
 
     const textData: CreateNoteModel = new CreateNoteModel(
       this.textForm.get('noteText')?.value,
-      this.textForm.get('priority')?.value
+      this.textForm.get('priority')?.value,
+      // this.textForm.get('image')?.value
+      this.url
     );
 
     // send this data to mock api service
-    this.noteService.create(textData).subscribe((e: any) => e);
-    this.toastr.success("Created!", "Success", {
-      tapToDismiss: true,
-      timeOut: 5000,
-      progressBar: true,
-      progressAnimation: 'decreasing',
-      positionClass: 'toast-top-right',
-      closeButton: true
-    });
+    this.noteService.create(textData).subscribe(
+      (success: any) => {
+        if (success.message == "success") {
+          this.toastr.success("Created!", "Success", {
+            tapToDismiss: true,
+            timeOut: 5000,
+            progressBar: true,
+            progressAnimation: 'decreasing',
+            positionClass: 'toast-top-right',
+            closeButton: true
+          });
+        }
+        
+      },
+      (error: any) => {
+        this.toastr.error("Error!", "Something went wrong!", {
+          tapToDismiss: true,
+          timeOut: 5000,
+          progressBar: true,
+          progressAnimation: 'decreasing',
+          positionClass: 'toast-top-right',
+          closeButton: true
+        });
+      });
+        
   }
   public cancel(): void {
     this.router.navigate(['/notes/getall']);
