@@ -1,7 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { map } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { NoteAppService } from '../../SharedServices/note-app.service';
 import { UpdateNoteComponent } from '../update-note/update-note.component';
 
@@ -29,9 +29,7 @@ import { UpdateNoteComponent } from '../update-note/update-note.component';
 
 export class DeleteNoteModal {
   @Output() passEntry: EventEmitter<boolean> = new EventEmitter(); 
-  constructor(public activeModal: NgbActiveModal) {
-
-  }
+  constructor(public activeModal: NgbActiveModal) {}
   public confirm(): void {
     this.passEntry.emit(true);
     this.activeModal.close('Cross click');
@@ -53,23 +51,30 @@ export class NotesComponent {
   isEmpty!: boolean;
   selectedSortOrder: any = "Sort by";  
   searchText: any;
+  private noteSubject = new BehaviorSubject<any>([]);
+  notes$ = this.noteSubject.asObservable();
+  note$!: Observable<Array<any>>;
+  _notes: any = [];
   constructor(
     private service: NoteAppService, 
     private modalService: NgbModal,
     private toastr: ToastrService,
     ) {
-    this.getAll();
+      this.getAll();
   }
 
   public getAll(): void {
     this.notes = [];
+    this.notes$ = this.noteSubject.asObservable();
+    this._notes = [];
     this.service.read().subscribe(
       (elem: any) => {
         this.isEmpty = typeof elem == undefined || elem == null || elem.length <= 0 ? true : false;
-        elem.forEach((element: any) => {
-          this.notes.push(element);
-        });
+        this.notes = elem;
         this.notes.reverse();
+        this.note$ = this.notes$;
+        this.getNextItems();  
+        this.noteSubject.next(this._notes);
     })
   }
 
@@ -150,25 +155,46 @@ export class NotesComponent {
               closeButton: true
             });
           });
-        
       })
       
     }
-    
   }
 
 
   sortOrders: string[] = ["Ascending", "Descending"];
-  templist: any[] = [];
   onChangeSortOrder(newSortOrder: any) { 
     // this.selectedSortOrder = newSortOrder;
     if(newSortOrder == "Ascending") {
-      this.notes.sort((a: any, b: any) => {return parseInt(a.priority) - parseInt(b.priority)});
+      this.note$ = this.note$.pipe(map(
+        (res: any) =>  {
+          res.sort((a: any, b: any) => {return parseInt(a.priority) - parseInt(b.priority)});
+          return res;
+        }));
+        
     }
     if(newSortOrder == "Descending") {
-      this.notes.sort((a: any, b: any) => {return parseInt(b.priority) - parseInt(a.priority)});
+      this.note$ = this.note$.pipe(map(
+        (res: any) =>  {
+          res.sort((a: any, b: any) => {return parseInt(b.priority) - parseInt(a.priority)});
+          return res;
+        }));
     }
     
+  }
+
+  loadMore(): void {
+    if (this.getNextItems()) {
+      this.noteSubject.next(this._notes);
+    }
+  }
+
+  getNextItems(): boolean {
+    if (this._notes.length >= this.notes.length) {
+      return false;
+    }
+    const remainingLength = Math.min(10, this.notes.length - this._notes.length);
+    this._notes.push(...this.notes.slice(this._notes.length, this._notes.length + remainingLength));
+    return true;
   }
 
 }

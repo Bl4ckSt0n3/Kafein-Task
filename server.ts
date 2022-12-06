@@ -36,17 +36,15 @@ export function app(): express.Express {
   // server.use(bodyParser({limit: "50mb"}));
 
   // Example Express Rest API endpoints
-  const notes: any[] = [
-    {id: 0, note: "this is test note", priority: 1}, 
-    {id: 1, note: "second test note", priority: 1},
-    {id: 2, note: "second test note", priority: 1},
-    {id: 3, note: "second test note", priority: 1},
-    {id: 4, note: "second test note", priority: 1},
-    {id: 5, note: "second test note", priority: 1},
-    {id: 6, note: "second test note", priority: 1},
-    {id: 7, note: "second test note", priority: 1},
-    {id: 8, note: "second test note", priority: 1}
-  ];
+  const notes: any[] = [];
+  for(let i = 0; i < 25; i++) {
+    var T = {
+      id: i,
+      note: "test note" + i,
+      priority: Math.floor(Math.random() * 6),
+    }
+    notes.push(T)
+  }
   server.get('/api/**', async (req, res) => { 
     // var notes: any[] = [{"note": "this is a note"}];
     res.send(notes);  
@@ -79,6 +77,7 @@ export function app(): express.Express {
         notes.splice(notes.indexOf(item), 1);
       }
     })
+    console.log("deleted!")
     res.status(200).send({message: "success"});
   });
   server.post('/api/auth/**', async (req, res) => {
