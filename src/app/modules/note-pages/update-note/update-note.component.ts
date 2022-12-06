@@ -13,7 +13,7 @@ export class UpdateNoteComponent {
   constructor(public activeModal: NgbActiveModal) { }
   @Output() passEntry: EventEmitter<object> = new EventEmitter(); 
   
-  editData: any; // parent component olan todo-full içinden gönderiliyor.
+  editData: any;
   
 
   textForm = new FormGroup({
